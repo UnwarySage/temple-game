@@ -35,6 +35,9 @@ func action_dive():
 
 func action_leap(facing):
 	if (state == "air"):
+		#cancel countering velcoity, for quick turns
+		 if (! sign(facing)==sign(self.get_linear_velocity().x)):
+				self.set_linear_velocity(Vector2(0,self.get_linear_velocity().y))
 		 self.apply_impulse(Vector2(0,0), Vector2(stat_leap_width * facing, 0))
 		 print("Yo")
 		
