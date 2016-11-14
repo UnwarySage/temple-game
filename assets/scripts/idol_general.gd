@@ -35,7 +35,7 @@ func action_dive():
 
 func action_leap(facing):
 	if (state == "air"):
-		#cancel countering velcoity, for quick turns
+		#cancel countering velocity, for quick turns
 		 if (! sign(facing)==sign(self.get_linear_velocity().x)):
 				self.set_linear_velocity(Vector2(0,self.get_linear_velocity().y))
 		 self.apply_impulse(Vector2(0,0), Vector2(stat_leap_width * facing, 0))
@@ -43,14 +43,19 @@ func action_leap(facing):
 		
 func action_climb():
 	if(state=="air"):
+
 		self.set_linear_velocity(Vector2(self.get_linear_velocity().x,0))
 		self.apply_impulse(Vector2(0,0), Vector2(0, -stat_leap_height))
 		print("climb")
-		
+		if my_image.has_method("climb"):
+			my_image.climb()
+			
+
 func action_die(killer):
 	#go limp and set state and image
 	self.set_mode(MODE_RIGID)
 	self.set_angular_velocity(3)
+	self.apply_impulse(Vector2(0,-5),killer.get_pos())
 	if my_image.has_method("die"):
 		my_image.die(killer)
 	state="dead"

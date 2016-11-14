@@ -16,5 +16,6 @@ func start_dive():
 	
 func die(killer):
 	self.set_modulate(Color("8b7b5151"))
+	dive_flare.set_emitting(false)
 
 
