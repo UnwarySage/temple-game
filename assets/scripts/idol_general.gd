@@ -5,6 +5,7 @@ onready var my_image= get_node("eidolin_sprite")
 
 var state="air"
 var flags=[]
+export var idol_type=""
 
 #stats, to be overridden by the identity node.
 var stat_dive_speed= 400
@@ -17,7 +18,9 @@ var dive_time=0
 
 
 func _ready():
-	action_leap(1)
+	if (idol_type==""):
+		idol_type="emerald"
+	action_climb()
 	set_process(true)
 	pass
 	
@@ -31,7 +34,7 @@ func action_dive():
 		state="dive"
 		if (my_image.has_method("start_dive")):
 				my_image.start_dive()
-		print("Dive")
+	
 
 func action_leap(facing):
 	if (state == "air"):
@@ -39,7 +42,7 @@ func action_leap(facing):
 		 if (! sign(facing)==sign(self.get_linear_velocity().x)):
 				self.set_linear_velocity(Vector2(0,self.get_linear_velocity().y))
 		 self.apply_impulse(Vector2(0,0), Vector2(stat_leap_width * facing, 0))
-		 print("Yo")
+
 		
 func action_climb():
 	if(state=="air"):
@@ -54,11 +57,11 @@ func action_climb():
 func action_die(killer):
 	#go limp and set state and image
 	self.set_mode(MODE_RIGID)
-	self.set_angular_velocity(3)
-	self.apply_impulse(Vector2(0,-5),killer.get_pos())
+	self.apply_impulse(self.get_pos(),killer.get_pos())
 	if my_image.has_method("die"):
 		my_image.die(killer)
 	state="dead"
+	print("A player was defeated")
 		
 
 func update_states():

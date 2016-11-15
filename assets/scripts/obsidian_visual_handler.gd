@@ -33,11 +33,12 @@ func start_dive():
 	
 func die(killer):
 	anim.play("dead",-1,0,false)
-	
+	sparker.set_emitting(true)
+	sparker.set_emit_timeout(.3)
+	sparker.set_amount(300)
 	smoker.set_emitting(true)
 	smoker.set_emit_timeout(2)
-	smoker.set_amount(smoker.get_amount() -200)
-	self.set_modulate(Color("8b7b5151"))
+	#smoker.set_amount(smoker.get_amount() -500)
 
 
 
